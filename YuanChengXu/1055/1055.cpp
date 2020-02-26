@@ -1,8 +1,10 @@
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
 int Joseph(int n, int m);
+
 int main()
 {
     int n, m;
@@ -13,29 +15,23 @@ int main()
 
 int Joseph(int n, int m)
 {
-    if (!(1 <= n && m <= 1000000))
-        return 0;
-    int a[1000];
+    int cur = 1;                        // 记录当前数到谁了
+    queue<int> Q;                       // 新建队列
     for (int i = 1; i <= n; i++)
-        a[i - 1] = i;
-    int count = 0, left = 10;
-    for (int i = 0; i <= n; i++)
+        Q.push(i);                      // 初始化队列
+    while (Q.size() > 1)                // 剩一个人结束循环
     {
-        if (left != 1)
+        if (cur == m)                   // 数到了，删除，cur复原
         {
-            if (i == n)
-                i = 0;
-            if (++count == m)
-            {
-                count = 0;
-                a[i] = 0;
-                left--;
-            }
+            Q.pop();
+            cur = 1;
+        }
+        else                            // 否则，把队首移到队尾，删除队首，cur++
+        {
+            Q.push(Q.front());
+            Q.pop();
+            cur++;
         }
     }
-    for (int i = 0; i < n; i++)
-    {
-        if (a[i])
-            return a[i];
-    }
+    return Q.front();                   // 返回最后剩下的人
 }

@@ -34,6 +34,9 @@ int main()
             }
         }
     }
-    cout << x + 1 << " " << y + 1 << " " << MM[x][y] << endl; 
+    s = MM[x][y];
+    x += 1;
+    y += 1;
+    cout << x << " " << y << " " << s << endl; 
     return 0;
 }
